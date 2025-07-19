@@ -10,28 +10,31 @@ export default function RegisterPage() {
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(false);
   const router = useRouter();
+  
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  setError(null);
+  setSuccess(false);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setError(null);
-    setSuccess(false);
+  try {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/register`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, username, password }),
+    });
 
-    try {
-      const response = await fetch('http://localhost:8080/auth/register', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, username, password }),
-      });
-      if (!response.ok) {
-        const data = await response.json();
-        throw new Error(data.message || 'Registration failed');
-      }
-      setSuccess(true);
-      setTimeout(() => router.push('/login'), 1500);
-    } catch (err) {
-      setError(err.message);
+    if (!response.ok) {
+      const data = await response.json();
+      throw new Error(data.message || 'Registration failed');
     }
-  };
+
+    setSuccess(true);
+    setTimeout(() => router.push('/login'), 1500);
+  } catch (err) {
+    setError(err.message);
+  }
+};
+
 
   return (
     <main className="flex min-h-screen items-center justify-center bg-gradient-to-br from-blue-50 to-blue-100">

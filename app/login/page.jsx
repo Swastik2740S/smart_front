@@ -10,25 +10,28 @@ export default function LoginPage() {
   const router = useRouter();
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    setError(null);
-    try {
-      const response = await fetch('http://localhost:8080/auth/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password }),
-      });
-      if (!response.ok) {
-        const data = await response.json();
-        throw new Error(data.message || 'Login failed');
-      }
+  e.preventDefault();
+  setError(null);
+  try {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/login`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password }),
+    });
+
+    if (!response.ok) {
       const data = await response.json();
-      localStorage.setItem('token', data.token);
-      router.push('/dashboard');
-    } catch (err) {
-      setError(err.message);
+      throw new Error(data.message || 'Login failed');
     }
-  };
+
+    const data = await response.json();
+    localStorage.setItem('token', data.token);
+    router.push('/dashboard');
+  } catch (err) {
+    setError(err.message);
+  }
+};
+
 
   return (
     <main className="flex min-h-screen items-center justify-center bg-gradient-to-br from-blue-50 to-blue-100">
