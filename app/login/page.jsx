@@ -10,28 +10,34 @@ export default function LoginPage() {
   const router = useRouter();
 
   const handleSubmit = async (e) => {
-  e.preventDefault();
-  setError(null);
-  try {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/login`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, password }),
-    });
+    e.preventDefault();
+    setError(null);
+    try {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/login`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password }),
+      });
 
-    if (!response.ok) {
+      if (!response.ok) {
+        const data = await response.json();
+        throw new Error(data.message || 'Login failed');
+      }
+
       const data = await response.json();
-      throw new Error(data.message || 'Login failed');
+
+      localStorage.setItem('token', data.token);
+
+      // Redirect by role
+      if (data.role === 'ADMIN') {
+        router.push('/dashboard/admin');
+      } else {
+        router.push('/dashboard/user');
+      }
+    } catch (err) {
+      setError(err.message);
     }
-
-    const data = await response.json();
-    localStorage.setItem('token', data.token);
-    router.push('/dashboard');
-  } catch (err) {
-    setError(err.message);
-  }
-};
-
+  };
 
   return (
     <main className="flex min-h-screen items-center justify-center bg-gradient-to-br from-blue-50 to-blue-100">
@@ -83,17 +89,16 @@ export default function LoginPage() {
               Sign in
             </button>
             <div className="text-center mt-4">
-  <span className="text-gray-500 text-sm">
-    Don&apos;t have an account?{' '}
-    <a
-      href="/register"
-      className="text-blue-600 hover:underline font-medium transition"
-    >
-      Register
-    </a>
-  </span>
-</div>
-
+              <span className="text-gray-500 text-sm">
+                Don&apos;t have an account?{' '}
+                <a
+                  href="/register"
+                  className="text-blue-600 hover:underline font-medium transition"
+                >
+                  Register
+                </a>
+              </span>
+            </div>
           </div>
         </form>
         <div className="mt-6 text-center text-xs text-gray-400">
