@@ -1,6 +1,8 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import Link from 'next/link';
+import Image from 'next/image';
 
 const features = [
   {
@@ -35,6 +37,7 @@ const features = [
   },
 ];
 
+
 const testimonials = [
   {
     name: "Anjali R.",
@@ -55,6 +58,7 @@ const testimonials = [
     avatar: "https://randomuser.me/api/portraits/women/45.jpg",
   },
 ];
+
 
 const pricing = [
   {
@@ -82,25 +86,26 @@ const pricing = [
   },
 ];
 
+
 export default function LandingPage() {
   return (
     <main className="min-h-screen bg-white relative">
       {/* NAVBAR */}
       <nav className="fixed top-0 left-0 w-full flex items-center justify-between bg-white/70 backdrop-blur border-b border-gray-100 px-6 py-4 z-[100] shadow-sm transition-all duration-200">
-        <a href="/" className="flex items-center gap-2">
+        <Link href="/" className="flex items-center gap-2">
           <span className="h-10 w-10 bg-blue-600 text-white text-2xl font-bold flex items-center justify-center rounded-full shadow-md select-none">
             ST
           </span>
           <span className="font-bold text-lg text-gray-800 tracking-wide">SmartTask</span>
-        </a>
+        </Link>
         <div className="flex gap-4">
           <a href="#features" className="text-gray-700 hover:text-blue-600 transition">Features</a>
           <a href="#pricing" className="text-gray-700 hover:text-blue-600 transition">Pricing</a>
           <a href="#testimonials" className="text-gray-700 hover:text-blue-600 transition">Testimonials</a>
         </div>
         <div className="flex gap-2">
-          <a href="/login" className="rounded border border-blue-600 px-4 py-2 font-medium text-blue-600 hover:bg-blue-600 hover:text-white transition">Login</a>
-          <a href="/register" className="rounded bg-blue-600 px-4 py-2 font-semibold text-white hover:bg-blue-700 transition shadow">Get Started</a>
+          <Link href="/login" className="rounded border border-blue-600 px-4 py-2 font-medium text-blue-600 hover:bg-blue-600 hover:text-white transition">Login</Link>
+          <Link href="/register" className="rounded bg-blue-600 px-4 py-2 font-semibold text-white hover:bg-blue-700 transition shadow">Get Started</Link>
         </div>
       </nav>
 
@@ -123,16 +128,21 @@ export default function LandingPage() {
           Assign tasks, manage teams, and track everything with a UI your users will love. 
           <br /> Powered by Next.js, Spring Boot, and <span className="font-semibold text-blue-700">SmartTask</span>.
         </motion.p>
+
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 0.5, duration: 0.5 }}
           className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4"
         >
-          <a href="/register" className="w-full sm:w-auto rounded bg-blue-600 px-8 py-4 font-semibold text-xl text-white shadow-lg hover:bg-blue-700 focus:ring-2 focus:ring-blue-400 transition-all duration-200">Get Started Free</a>
-          <a href="/login" className="w-full sm:w-auto rounded border border-blue-600 px-8 py-4 font-medium text-blue-600 bg-white hover:bg-blue-50 transition">Login</a>
+          <Link href="/register" className="w-full sm:w-auto rounded bg-blue-600 px-8 py-4 font-semibold text-xl text-white shadow-lg hover:bg-blue-700 focus:ring-2 focus:ring-blue-400 transition-all duration-200">
+            Get Started Free
+          </Link>
+          <Link href="/login" className="w-full sm:w-auto rounded border border-blue-600 px-8 py-4 font-medium text-blue-600 bg-white hover:bg-blue-50 transition">
+            Login
+          </Link>
         </motion.div>
-        {/* Decorative SVG illustration */}
+
         <svg
           aria-hidden="true"
           className="absolute left-1/2 -translate-x-1/2 top-[60%] opacity-30 blur-xl"
@@ -144,7 +154,9 @@ export default function LandingPage() {
 
       {/* FEATURES */}
       <section id="features" className="py-24 px-6 bg-white">
-        <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-12 text-center">Features your team will love</h2>
+        <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-12 text-center">
+          Features your team will love
+        </h2>
         <div className="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
           {features.map((f, i) => (
             <motion.div
@@ -164,10 +176,7 @@ export default function LandingPage() {
       </section>
 
       {/* TESTIMONIALS */}
-      <section
-        id="testimonials"
-        className="bg-blue-50 py-24 px-6"
-      >
+      <section id="testimonials" className="bg-blue-50 py-24 px-6">
         <h2 className="text-3xl font-bold text-gray-900 text-center mb-12">User testimonials</h2>
         <div className="max-w-3xl mx-auto overflow-x-auto flex gap-6 scrollbar-hide py-2">
           {testimonials.map((t, i) => (
@@ -179,8 +188,16 @@ export default function LandingPage() {
               transition={{ delay: 0.1 + i * 0.1, duration: 0.7, type: 'spring' }}
               className="min-w-[320px] bg-white border rounded-xl shadow p-6 flex flex-col items-center hover:shadow-xl hover:-translate-y-1 transition"
             >
-              <img src={t.avatar} alt={t.name} className="w-16 h-16 rounded-full border-4 border-blue-200 mb-4 shadow" />
-              <p className="text-gray-700 mb-3 text-base italic">"{t.quote}"</p>
+              <Image
+                src={t.avatar}
+                alt={t.name}
+                width={64}
+                height={64}
+                className="rounded-full border-4 border-blue-200 mb-4 shadow"
+              />
+              <p className="text-gray-700 mb-3 text-base italic">
+                &ldquo;{t.quote}&rdquo;
+              </p>
               <span className="font-semibold text-gray-900">{t.name}</span>
               <span className="text-xs text-gray-500">{t.role}</span>
             </motion.div>
@@ -208,18 +225,22 @@ export default function LandingPage() {
               <div className="text-lg font-bold uppercase tracking-wider mb-2">{plan.name}</div>
               <div className="text-3xl font-extrabold text-blue-700 mb-5">{plan.price}</div>
               <ul className="mb-7 space-y-2 text-gray-700">
-                {plan.features.map(f => (
+                {plan.features.map((f) => (
                   <li key={f} className="flex items-center gap-2 justify-center">
                     <span className="text-green-500">●</span> <span>{f}</span>
                   </li>
                 ))}
               </ul>
-              <a
+              <Link
                 href={plan.name === "Enterprise" ? "mailto:sales@smarttask.com" : "/register"}
-                className={`w-full rounded px-6 py-3 font-semibold text-white ${plan.highlight ? 'bg-blue-600 hover:bg-blue-700' : 'bg-gray-400 hover:bg-gray-500'} transition`}
+                className={`w-full rounded px-6 py-3 font-semibold text-white ${
+                  plan.highlight
+                    ? 'bg-blue-600 hover:bg-blue-700'
+                    : 'bg-gray-400 hover:bg-gray-500'
+                } transition`}
               >
                 {plan.name === "Enterprise" ? "Contact Sales" : "Get Started"}
-              </a>
+              </Link>
             </motion.div>
           ))}
         </div>
@@ -229,9 +250,9 @@ export default function LandingPage() {
       <section className="text-center py-16 px-6 bg-gradient-to-tr from-blue-600 to-blue-400">
         <h3 className="text-2xl sm:text-3xl font-bold text-white mb-2">Ready to boost your productivity?</h3>
         <p className="text-white mb-4">Sign up now and start managing your projects smarter with SmartTask.</p>
-        <a href="/register" className="inline-block rounded shadow-lg bg-white text-blue-700 font-semibold px-7 py-3 hover:bg-blue-50 transition-all text-lg">
+        <Link href="/register" className="inline-block rounded shadow-lg bg-white text-blue-700 font-semibold px-7 py-3 hover:bg-blue-50 transition-all text-lg">
           Start for Free
-        </a>
+        </Link>
       </section>
 
       {/* FOOTER */}
