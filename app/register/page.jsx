@@ -52,21 +52,21 @@ const handleSubmit = async (e) => {
             <label htmlFor="username" className="block text-sm font-medium text-gray-700">Username</label>
             <input id="username" name="username" type="text" autoComplete="username" required value={username}
               onChange={(e) => setUsername(e.target.value)}
-              className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm placeholder-gray-400 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition"
+              className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm placeholder-black focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition"
             />
           </div>
           <div>
             <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email address</label>
             <input id="email" name="email" type="email" autoComplete="email" required value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm placeholder-gray-400 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition"
+              className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm placeholder-black focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition"
             />
           </div>
           <div>
             <label htmlFor="password" className="block text-sm font-medium text-gray-700">Password</label>
             <input id="password" name="password" type="password" autoComplete="new-password" required value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm placeholder-gray-400 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition"
+              className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm placeholder-black focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition"
             />
           </div>
           {error && <p className="text-sm text-red-600">{error}</p>}
