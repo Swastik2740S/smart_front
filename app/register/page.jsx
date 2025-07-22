@@ -19,7 +19,6 @@ const handleSubmit = async (e) => {
   try {
     const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/register`, {
       method: 'POST',
-       credentials: "include",
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email, username, password }),
     });
