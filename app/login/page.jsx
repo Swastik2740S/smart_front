@@ -2,16 +2,20 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { jwtDecode } from 'jwt-decode';
+
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
   const router = useRouter();
+  
 
-  const handleSubmit = async (e) => {
+ const handleSubmit = async (e) => {
     e.preventDefault();
-    setError(null);
+    setError('');
+
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/login`, {
         method: 'POST',
@@ -20,22 +24,25 @@ export default function LoginPage() {
       });
 
       if (!response.ok) {
-        const data = await response.json();
-        throw new Error(data.message || 'Login failed');
+        const errData = await response.json();
+        throw new Error(errData.message || 'Login failed');
       }
 
-      const data = await response.json();
+      const { jwt, role } = await response.json();
 
-      localStorage.setItem('token', data.token);
+      // ✅ Save token
+      localStorage.setItem('token', jwt);
 
-      // Redirect by role
-      if (data.role === 'ADMIN') {
+      // ✅ Route based on role
+      if (role.toUpperCase() === 'ADMIN') {
         router.push('/dashboard/admin');
       } else {
         router.push('/dashboard/user');
       }
+
     } catch (err) {
-      setError(err.message);
+      console.error('Login error:', err);
+      setError(err.message || 'Something went wrong.');
     }
   };
 
